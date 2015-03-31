@@ -6,3 +6,5 @@ description      'Installs/Configures dsc_resource_try'
 long_description 'Installs/Configures dsc_resource_try'
 version          '0.1.0'
 
+depends          'powershell'
+
