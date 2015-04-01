@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license          'all_rights'
 description      'Installs/Configures dsc_resource_try'
 long_description 'Installs/Configures dsc_resource_try'
-version          '0.1.3'
+version          '0.1.4'
 
 depends          'powershell'
 
