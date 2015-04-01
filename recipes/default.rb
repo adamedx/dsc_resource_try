@@ -19,7 +19,7 @@ Configuration 'disable_lcm' {
 
 disable_lcm
 
-set-dsclocalconfigurationmanager -path .\disable_lcm -wait
+set-dsclocalconfigurationmanager -path .\disable_lcm
 EOH
 end
 
