@@ -20,6 +20,7 @@
 # the invoke-dsc resource capability.
 
 # include_recipe 'powershell::powershell5'
+
 include_recipe 'powershell::dsc'
 
 powershell_script 'disable_lcm' do
@@ -36,6 +37,7 @@ disable_lcm
 
 set-dsclocalconfigurationmanager -path .\\disable_lcm
 EOH
+  not_if "(Get-DscLocalConfigurationManager).refreshmode -eq 'disabled'"
 end
 
 dsc_resource 'Create Test User' do
