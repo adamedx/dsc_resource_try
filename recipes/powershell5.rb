@@ -37,6 +37,14 @@ when 'windows'
     only_if { reboot_pending? }
   end
 
+  ruby_block 'check_required_powershell' do
+    block do
+    end
+    action :nothing
+    not_if "($PSVersionTable['psversion'].Major -ge 5) -and ($PSVersionTable['psversion'].Build -gt 9701)"
+    notifies :reboot_now, 'reboot[reboot_if_needed]', :immediately
+  end
+
 
   install_command = "'#{powershell5_local_msi}' /quiet /norestart"
   powershell_script 'install_powershell5' do
@@ -51,7 +59,8 @@ echo 'Package installation done.'
 echo 'Installation duration: ' + $duration.ToString(\"hh':'mm':'ss\")
 EOH
     not_if "($PSVersionTable['psversion'].Major -ge 5) -and ($PSVersionTable['psversion'].Build -gt 9701)"
-    notifies :reboot_now, 'reboot[reboot_if_needed]', :immediately
+    #    notifies :reboot_now, 'reboot[reboot_if_needed]', :immediately
+    notifies :run, 'ruby_block[check_required_powershell]', :immediately
   end
 
 end
