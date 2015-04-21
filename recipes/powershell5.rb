@@ -32,21 +32,14 @@ when 'windows'
     not_if "($PSVersionTable['psversion'].Major -ge 5) -and ($PSVersionTable['psversion'].Build -gt 9701)"
   end
 
-#    { registry_data_exists?('HKLM\SOFTWARE\Microsoft\PowerShell\3\PowerShellEngine', { :name => 'PowerShellVersion', :type => :string, :data => '5.0.9701.0' }) }
-
   reboot 'reboot_if_needed' do
     action :nothing
     only_if { reboot_pending? }
   end
 
-#  reboot 'reboot_if_needed' do
-#    action :nothing
-#    only_if { reboot_pending? }
-#  end
 
   install_command = "'#{powershell5_local_msi}' /quiet /norestart"
   powershell_script 'install_powershell5' do
-#    code "start-process '#{powershell5_local_msi}' -argumentlist '/quiet','/norestart' -wait"
     code <<-EOH
 echo 'Scheduling installation...'
 & schtasks /create /f  /sc once /st 00:00:00 /tn chefclientbootstraptask /ru SYSTEM /rl HIGHEST /tr \"cmd /c #{install_command} & sleep 2 & waitfor /s %computername% /si chefclientinstalldone\"
