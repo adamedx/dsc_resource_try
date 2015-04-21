@@ -21,6 +21,7 @@
 
 # include_recipe 'powershell::powershell5'
 
+include_recipe 'dsc_resource_try::powershell5'
 include_recipe 'powershell::dsc'
 
 powershell_script 'disable_lcm' do
